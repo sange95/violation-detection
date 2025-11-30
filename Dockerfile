@@ -31,7 +31,7 @@ RUN apk add --no-cache ca-certificates tzdata
 # 设置时区
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
+ENV VLLM_BASE_URL=http://172.17.0.1:8002
 # 创建非root用户
 RUN addgroup -g 1000 appuser && \
     adduser -D -u 1000 -G appuser appuser
