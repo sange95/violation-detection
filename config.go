@@ -25,13 +25,13 @@ func LoadConfig() *Config {
 	config := &Config{
 		// 文件服务器配置
 		FileServerPort: getEnv("FILE_SERVER_PORT", "8080"),
-		FileServerPath: getEnv("FILE_SERVER_PATH", "./uploads"),
+		FileServerPath: getEnv("FILE_SERVER_PATH", "/data/uploads"),
 
 		// API服务器配置
 		APIServerPort: getEnv("API_SERVER_PORT", "8081"),
 
 		// VLLM配置
-		VLLMBaseURL: getEnv("VLLM_BASE_URL", "http://localhost:8001"),
+		VLLMBaseURL: getEnv("VLLM_BASE_URL", "http://localhost:8002"),
 		VLLMModel:   getEnv("VLLM_MODEL", ""),
 		VLLMPrompt:  getEnv("VLLM_PROMPT", "请检测该图片中内容。"),
 	}
@@ -59,4 +59,3 @@ func getEnv(key, defaultValue string) string {
 	}
 	return defaultValue
 }
-
