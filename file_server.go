@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"path/filepath"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,6 +26,23 @@ func NewFileServer(port, filePath string) *FileServer {
 // Start 启动文件服务器
 func (fs *FileServer) Start() error {
 	router := gin.Default()
+
+	// 配置 CORS 中间件
+	config := cors.DefaultConfig()
+	// 允许所有来源（生产环境建议配置具体域名）
+	config.AllowAllOrigins = true
+	// 允许的 HTTP 方法
+	config.AllowMethods = []string{"GET", "POST", "OPTIONS"}
+	// 允许的请求头
+	config.AllowHeaders = []string{"Origin", "Content-Type", "Accept", "Cache-Control", "X-Requested-With"}
+	// 允许暴露的响应头
+	config.ExposeHeaders = []string{"Content-Length", "Content-Type"}
+	// 允许携带凭证（如果需要）
+	config.AllowCredentials = true
+	// 预检请求缓存时间（秒）
+	config.MaxAge = 12 * 60 * 60 // 12小时
+
+	router.Use(cors.New(config))
 
 	// 静态文件服务
 	router.Static("/files", fs.filePath)
