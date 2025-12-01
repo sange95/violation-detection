@@ -181,8 +181,8 @@ func (as *APIServer) handleUpload(c *gin.Context) {
 	if err != nil {
 		log.Printf("VLLM推理失败: %v", err)
 		// 即使推理失败，也返回上传成功的信息
-		c.JSON(http.StatusOK, UploadResponse{
-			Success:  true,
+		c.JSON(http.StatusInternalServerError, UploadResponse{
+			Success:  false,
 			Message:  "文件上传成功，但推理失败",
 			ImageURL: imageURL,
 			Error:    fmt.Sprintf("推理失败: %v", err),
