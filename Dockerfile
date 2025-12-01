@@ -1,5 +1,5 @@
 # 使用多阶段构建
-FROM golang:1.21-alpine AS builder
+FROM golang:1.23-alpine AS builder
 
 # 配置 Alpine 中国镜像源（阿里云）
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
