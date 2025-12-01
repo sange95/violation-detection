@@ -1,6 +1,9 @@
 # 使用多阶段构建
 FROM golang:1.21-alpine AS builder
 
+# 配置 Alpine 中国镜像源（阿里云）
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+
 # 安装必要的工具
 RUN apk add --no-cache git
 
@@ -24,6 +27,9 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o vllm-show .
 
 # 运行阶段
 FROM alpine:latest
+
+# 配置 Alpine 中国镜像源（阿里云）
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 
 # 安装ca证书（用于HTTPS请求）
 RUN apk add --no-cache ca-certificates tzdata
